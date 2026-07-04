@@ -4,14 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class LayananModel extends Model
+class PelangganModel extends Model
 {
-    protected $table            = 'layanan';
+    protected $table            = 'pelanggan';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $allowedFields    = ['nama_layanan', 'harga', 'satuan', 'estimasi_waktu'];
+    protected $allowedFields    = ['nama', 'alamat', 'no_hp'];
+    
     protected $useTimestamps    = true;
-
+    
+    // Mengaktifkan Soft Delete
     protected $useSoftDeletes   = true;
     protected $deletedField     = 'deleted_at';
 }

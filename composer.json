@@ -13,8 +13,10 @@
         "php": "^8.2",
         "ext-intl": "*",
         "ext-mbstring": "*",
+        "dompdf/dompdf": "*",
         "laminas/laminas-escaper": "^2.18",
         "psr/log": "^3.0"
+        
     },
     "require-dev": {
         "boundwize/structarmed": "0.13.4",

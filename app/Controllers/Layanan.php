@@ -3,15 +3,21 @@
 namespace App\Controllers;
 
 use App\Models\LayananModel;
+use Dompdf\Dompdf;
 
 class Layanan extends BaseController
 {
     protected $layananModel;
 
-    public function __construct()
-    {
-        $this->layananModel = new LayananModel();
+   public function __construct()
+{
+    if (!session()->get('isLoggedIn')) {
+        header('Location: ' . base_url('/login'));
+        exit;
     }
+
+    $this->layananModel = new LayananModel();
+}
 
     public function index()
     {
@@ -77,4 +83,30 @@ class Layanan extends BaseController
         session()->setFlashdata('pesan', 'Data layanan berhasil dihapus.');
         return redirect()->to('/layanan');
     }
+
+    public function exportPdf()
+{
+    $data = [
+        'title'   => 'Laporan Daftar Layanan Laundry',
+        'layanan' => $this->layananModel->findAll()
+    ];
+
+    $html = view('layanan/pdf', $data);
+
+    $dompdf = new Dompdf();
+
+    $dompdf->loadHtml($html);
+
+    $dompdf->setPaper('A4', 'portrait');
+
+    $dompdf->render();
+
+    $dompdf->stream(
+        'Daftar_Layanan_Laundry.pdf',
+        ['Attachment' => false]
+    );
+}
+
+
+
 }
